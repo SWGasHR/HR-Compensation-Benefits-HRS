@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>INSERT TITLE HERE</title>
+  <title>DIR: Compensation, Benefits, & HRS</title>
   <link rel="icon" type="image/png" href="department.png">
   <style>
     body, html {
@@ -277,6 +277,76 @@
       font-style: italic;
     }
 
+
+
+    /* --- COLLAPSIBLE PROJECT GROUPS --- */
+    .project-group-toggle,
+    .project-subgroup-toggle {
+      width: 100%;
+      border: none;
+      background: white;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+
+    .project-group-toggle {
+      padding: 10px 16px 6px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8a8a8a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-top: 1px solid #e9e9e9;
+    }
+
+    .project-group-toggle:hover,
+    .project-group-toggle:focus {
+      background: #f3f4f6;
+      color: #252763;
+      outline: none;
+    }
+
+    .project-subgroup-toggle {
+      padding: 10px 16px 10px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      background: white;
+    }
+
+    .project-subgroup-toggle:hover,
+    .project-subgroup-toggle:focus {
+      background: #f3f4f6;
+      color: #252763;
+      outline: none;
+    }
+
+    .project-group-content,
+    .project-subgroup-content {
+      display: none;
+    }
+
+    .project-group-content.open,
+    .project-subgroup-content.open {
+      display: block;
+    }
+
+    .project-caret {
+      font-size: 11px;
+      line-height: 1;
+      margin-left: 10px;
+      color: inherit;
+    }
+
+    .project-subgroup-content .project-view-link {
+      padding-left: 38px;
+    }
+
     /* --- RED WARNING BAR --- */
     .header-bar {
       background-color: #d9534f;
@@ -397,11 +467,37 @@
       min-height: 0;
     }
 
-    iframe {
+    .iframe-pool {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: white;
+    }
+
+    .content-frame {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       border: none;
       display: block;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: white;
+      transition: opacity 0.34s ease;
+    }
+
+    .content-frame.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .content-frame.fading-out {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
     }
 
     /* --- SMARTER LOADING MESSAGE --- */
@@ -676,7 +772,7 @@
       </div>
       <div class="dropdown-menu">
         <div class="dropdown-header">HRLT</div>
-        <a href="https://swgashr.github.io/HRCM/HR">Albert Taylor</a>
+        <a href="https://swgashr.github.io/HR">Albert Taylor</a>
         <a href="https://swgashr.github.io/HR-Operations">Gail Carmona</a>
         <a href="https://swgashr.github.io/HR-Compensation-Benefits-HRS">Mike Bryant</a>
         <a href="https://swgashr.github.io/HR-EX-DEI-TA">Courtney Moore</a>
@@ -687,7 +783,7 @@
         <a href="https://swgashr.github.io/Benefits">Benefits</a>
         <a href="https://swgashr.github.io/Compensation">Compensation</a>
         <a href="https://swgashr.github.io/DEI">DE&I</a>
-        <a href="https://swgashr.github.io/ELO">ELO</a>
+        <a href="https://swgashr.github.io/HRLO">HRLO</a>
         <a href="https://swgashr.github.io/Employee-Experience">Employee Experience</a>
         <a href="https://swgashr.github.io/HRBP">HRBP</a>
         <a href="https://swgashr.github.io/HRCM">HRCM</a>
@@ -735,7 +831,7 @@
     </div>
 
     <a class="swgas-logo-link"
-       href="INSERT_SHAREPOINT_LINK_HERE"
+       href="https://swgas.sharepoint.com/sites/HR"
        target="_blank"
        rel="noopener noreferrer"
        title="Southwest Gas SharePoint">
@@ -768,10 +864,7 @@
   </div>
 
   <div class="iframe-wrap">
-    <iframe id="contentFrame"
-            src=""
-            allowfullscreen>
-    </iframe>
+    <div class="iframe-pool" id="iframePool"></div>
 
     <div class="loading-message hidden" id="loadingMessage">
       <div class="loading-content">
@@ -820,7 +913,7 @@
       <h2 id="saveModalTitle">Did you save?</h2>
 
       <p id="saveModalDescription">
-        You are currently viewing a project sheet. Please confirm that you saved your work before leaving this project.
+        Please confirm that you saved your work before leaving this project.
       </p>
 
       <div class="save-modal-actions">
@@ -841,29 +934,29 @@
        ========================================================== */
 
     const PORTAL_CONFIG = {
-      portalTitle: "INSERT TITLE HERE",
+      portalTitle: "DIR: Comp, Benefits, & HRS Project Portal",
 
-      departmentName: "(Department Name)",
+      departmentName: "All",
 
       defaultViewId: "home",
 
       views: {
         home: {
           label: "Home",
-          embedSrc: "INSERT_HOME_EMBED_LINK_HERE",
+          embedSrc: "https://app.smartsheet.com/b/publish?EQBCT=7c519e87f82b480ab66ec680ab74068c",
           viewOnlyNote: false,
           refreshReminder: true
         },
 
         mainInitiatives: {
-          label: "(Department Name) Main Initiatives",
-          embedSrc: "INSERT_MAIN_INITIATIVES_EMBED_LINK_HERE",
+          label: "DIR: Comp, Ben, & HRS Main Initiatives",
+          embedSrc: "https://app.smartsheet.com/b/publish?EQBCT=7c62e92983d04df4b556b375116110a7",
           viewOnlyNote: false,
           refreshReminder: true
         },
 
         allDepartmentProjects: {
-          label: "All (Department Name) Projects (View Only)",
+          label: "All Comp, Ben, & HRS Projects (View Only)",
           embedSrc: "INSERT_ALL_DEPARTMENT_PROJECTS_VIEW_EMBED_LINK_HERE",
           viewOnlyNote: true,
           refreshReminder: false
@@ -877,26 +970,171 @@
         }
       },
 
-      projects: [
+      projectGroups: [
         {
-          id: "project1",
-          label: "Project Link 1",
-          embedSrc: "INSERT_DEPARTMENT_PROJECT_EMBED_LINK_1_HERE"
+          label: "DIR: Comp, Ben, & HRS",
+          sections: [
+            {
+              label: "BAU",
+              projects: [
+                {
+                  id: "bau comp",
+                  label: "Compensation (BAU)",
+                  embedSrc: "INSERT_COMPENSATION_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau benefits",
+                  label: "Benefits (BAU)",
+                  embedSrc: "INSERT_BENEFITS_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau hrs",
+                  label: "HRS (BAU)",
+                  embedSrc: "INSERT_HRS_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau hrss",
+                  label: "HRSS (BAU)",
+                  embedSrc: "INSERT_HRSS_BAU_EMBED_LINK_HERE"
+                }
+              ]
+            },
+            {
+              label: "All Projects",
+              projects: [
+                {
+                  id: "all comp projects",
+                  label: "All Compensation Projects",
+                  embedSrc: "INSERT_ALL_COMPENSATION_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all benefits projects",
+                  label: "All Benefits Projects",
+                  embedSrc: "INSERT_ALL_BENEFITS_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all hrs projects",
+                  label: "All HRS Projects",
+                  embedSrc: "INSERT_ALL_HRS_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all hrss projects",
+                  label: "All HRSS Projects",
+                  embedSrc: "INSERT_ALL_HRSS_PROJECTS_EMBED_LINK_HERE"
+                }
+              ]
+            }
+          ]
         },
         {
-          id: "project2",
-          label: "Project Link 2",
-          embedSrc: "INSERT_DEPARTMENT_PROJECT_EMBED_LINK_2_HERE"
+          label: "DIR: HR Operations",
+          sections: [
+            {
+              label: "BAU",
+              projects: [
+                {
+                  id: "bau hrbp",
+                  label: "HRBP (BAU)",
+                  embedSrc: "INSERT_HRBP_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau hrlo",
+                  label: "HRLO (BAU)",
+                  embedSrc: "INSERT_HRLO_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau hrcm",
+                  label: "HRCM (BAU)",
+                  embedSrc: "INSERT_HRCM_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau labor relations",
+                  label: "Labor Relations (BAU)",
+                  embedSrc: "INSERT_LABOR_RELATIONS_BAU_EMBED_LINK_HERE"
+                }
+              ]
+            },
+            {
+              label: "All Projects",
+              projects: [
+                {
+                  id: "all hrbp projects",
+                  label: "All HRBP Projects",
+                  embedSrc: "INSERT_ALL_HRBP_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all hrlo projects",
+                  label: "All HRLO Projects",
+                  embedSrc: "INSERT_ALL_HRLO_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all hrcm projects",
+                  label: "All HRCM Projects",
+                  embedSrc: "INSERT_ALL_HRCM_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all labor relations projects",
+                  label: "All Labor Relations Projects",
+                  embedSrc: "INSERT_ALL_LABOR_RELATIONS_PROJECTS_EMBED_LINK_HERE"
+                }
+              ]
+            }
+          ]
         },
         {
-          id: "project3",
-          label: "Project Link 3",
-          embedSrc: "INSERT_DEPARTMENT_PROJECT_EMBED_LINK_3_HERE"
-        },
-        {
-          id: "main hr initiative",
-          label: "Main HR Initiative #1 (Placeholder)",
-          embedSrc: "INSERT_DEPARTMENT_INITIATIVE_LINK_HERE"
+          label: "DIR: EX, DE&I, & TA",
+          sections: [
+            {
+              label: "BAU",
+              projects: [
+                {
+                  id: "bau employee experience",
+                  label: "Employee Experience (BAU)",
+                  embedSrc: "INSERT_EMPLOYEE_EXPERIENCE_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau dei",
+                  label: "DE&I (BAU)",
+                  embedSrc: "INSERT_DEI_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau talent acquisition",
+                  label: "Talent Acquisition (BAU)",
+                  embedSrc: "INSERT_TALENT_ACQUISITION_BAU_EMBED_LINK_HERE"
+                },
+                {
+                  id: "bau talent development",
+                  label: "Talent Development (BAU)",
+                  embedSrc: "INSERT_TALENT_DEVELOPMENT_BAU_EMBED_LINK_HERE"
+                }
+              ]
+            },
+            {
+              label: "All Projects",
+              projects: [
+                {
+                  id: "all employee experience projects",
+                  label: "All Employee Experience Projects",
+                  embedSrc: "INSERT_ALL_EMPLOYEE_EXPERIENCE_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all dei projects",
+                  label: "All DE&I Projects",
+                  embedSrc: "INSERT_ALL_DEI_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all talent acquisition projects",
+                  label: "All Talent Acquisition Projects",
+                  embedSrc: "INSERT_ALL_TALENT_ACQUISITION_PROJECTS_EMBED_LINK_HERE"
+                },
+                {
+                  id: "all talent development projects",
+                  label: "All Talent Development Projects",
+                  embedSrc: "INSERT_ALL_TALENT_DEVELOPMENT_PROJECTS_EMBED_LINK_HERE"
+                }
+              ]
+            }
+          ]
         }
       ]
     };
@@ -906,7 +1144,7 @@
        You should not need to edit below this line.
        ========================================================== */
 
-    const contentFrame = document.getElementById("contentFrame");
+    const iframePool = document.getElementById("iframePool");
     const warningBar = document.getElementById("warningBar");
     const warningToggle = document.getElementById("warningToggle");
     const saveModal = document.getElementById("saveModal");
@@ -932,6 +1170,9 @@
     let suppressHashChange = false;
     let lastFocusedElementBeforeModal = null;
     let navPopupDismissedRouteKey = null;
+    let iframeRegistry = {};
+    let preloadStarted = false;
+    let fadeCleanupTimer = null;
 
     let loadingShowTimer = null;
     let loadingHideTimer = null;
@@ -942,6 +1183,31 @@
     const LOADER_HIDE_AFTER_IFRAME_LOAD_MS = 650;
     const LOADER_FADE_MS = 320;
     const LOADER_MIN_VISIBLE_MS = 900;
+    const PRELOAD_START_DELAY_MS = 900;
+    const PRELOAD_STAGGER_MS = 250;
+    const IFRAME_FADE_MS = 340;
+    const AUTH_REFRESH_FLAG = "smartsheetPortalAuthRefreshPending";
+    const AUTH_REFRESH_DONE_FLAG = "smartsheetPortalAuthRefreshDone";
+
+    function handleAuthReturnRefresh() {
+      const authRefreshPending = sessionStorage.getItem(AUTH_REFRESH_FLAG) === "true";
+      const authRefreshDone = sessionStorage.getItem(AUTH_REFRESH_DONE_FLAG) === "true";
+
+      if (authRefreshPending && !authRefreshDone) {
+        sessionStorage.setItem(AUTH_REFRESH_DONE_FLAG, "true");
+        sessionStorage.removeItem(AUTH_REFRESH_FLAG);
+        window.location.reload();
+        return;
+      }
+
+      sessionStorage.removeItem(AUTH_REFRESH_DONE_FLAG);
+    }
+
+    handleAuthReturnRefresh();
+
+    function markAuthRefreshPending() {
+      sessionStorage.setItem(AUTH_REFRESH_FLAG, "true");
+    }
 
     function isPlaceholderLink(link) {
       if (!link) {
@@ -991,6 +1257,174 @@
         type: "view",
         id: PORTAL_CONFIG.defaultViewId || "home"
       };
+    }
+
+    function getEmbedDataForRoute(route) {
+      if (!route) {
+        return null;
+      }
+
+      if (route.type === "project") {
+        const project = getProjectById(route.id);
+
+        if (!project) {
+          return null;
+        }
+
+        return {
+          label: project.label,
+          embedSrc: project.embedSrc,
+          isProject: true,
+          viewOnlyNote: false,
+          refreshReminder: false
+        };
+      }
+
+      const view = PORTAL_CONFIG.views[route.id];
+
+      if (!view) {
+        return null;
+      }
+
+      return {
+        label: view.label,
+        embedSrc: view.embedSrc,
+        isProject: false,
+        viewOnlyNote: view.viewOnlyNote,
+        refreshReminder: view.refreshReminder
+      };
+    }
+
+    function getAllEmbeddableRoutes() {
+      const routes = [];
+
+      Object.keys(PORTAL_CONFIG.views).forEach(function(viewId) {
+        routes.push({
+          type: "view",
+          id: viewId
+        });
+      });
+
+      getAllProjects().forEach(function(project) {
+        routes.push({
+          type: "project",
+          id: project.id
+        });
+      });
+
+      return routes;
+    }
+
+    function getOrCreateIframeForRoute(route) {
+      const key = routeKey(route);
+      const embedData = getEmbedDataForRoute(route);
+
+      if (!embedData || isPlaceholderLink(embedData.embedSrc)) {
+        return null;
+      }
+
+      if (iframeRegistry[key]) {
+        return iframeRegistry[key];
+      }
+
+      const frame = document.createElement("iframe");
+      const frameTitle = replaceDepartmentName(embedData.label || "Smartsheet view");
+
+      frame.className = "content-frame";
+      frame.setAttribute("data-route-key", key);
+      frame.setAttribute("title", frameTitle);
+      frame.setAttribute("allowfullscreen", "");
+      frame.src = embedData.embedSrc;
+
+      const iframeRecord = {
+        frame: frame,
+        isLoaded: false
+      };
+
+      iframeRegistry[key] = iframeRecord;
+
+      frame.addEventListener("load", function() {
+        iframeRecord.isLoaded = true;
+
+        if (currentViewKey === key) {
+          scheduleLoadingMessageHide();
+        }
+      });
+
+      iframePool.appendChild(frame);
+
+      return iframeRecord;
+    }
+
+    function activateIframeForRoute(route) {
+      const key = routeKey(route);
+      const iframeRecord = getOrCreateIframeForRoute(route);
+
+      if (!iframeRecord) {
+        return null;
+      }
+
+      clearTimeout(fadeCleanupTimer);
+
+      Object.keys(iframeRegistry).forEach(function(registryKey) {
+        const frame = iframeRegistry[registryKey].frame;
+        const shouldActivate = registryKey === key;
+
+        if (shouldActivate) {
+          frame.classList.remove("fading-out");
+          frame.classList.add("active");
+        } else if (frame.classList.contains("active")) {
+          frame.classList.remove("active");
+          frame.classList.add("fading-out");
+        } else {
+          frame.classList.remove("active");
+          frame.classList.remove("fading-out");
+        }
+      });
+
+      fadeCleanupTimer = setTimeout(function() {
+        Object.keys(iframeRegistry).forEach(function(registryKey) {
+          if (registryKey !== key) {
+            iframeRegistry[registryKey].frame.classList.remove("fading-out");
+          }
+        });
+      }, IFRAME_FADE_MS + 50);
+
+      return iframeRecord;
+    }
+
+    function startPreloadingEmbeddedLinks(activeRoute) {
+      if (preloadStarted) {
+        return;
+      }
+
+      preloadStarted = true;
+
+      const activeKey = activeRoute ? routeKey(activeRoute) : "";
+      const routesToPreload = getAllEmbeddableRoutes().filter(function(route) {
+        const embedData = getEmbedDataForRoute(route);
+
+        return (
+          routeKey(route) !== activeKey &&
+          embedData &&
+          !isPlaceholderLink(embedData.embedSrc)
+        );
+      });
+
+      let routeIndex = 0;
+
+      function preloadNextRoute() {
+        if (routeIndex >= routesToPreload.length) {
+          return;
+        }
+
+        getOrCreateIframeForRoute(routesToPreload[routeIndex]);
+        routeIndex += 1;
+
+        setTimeout(preloadNextRoute, PRELOAD_STAGGER_MS);
+      }
+
+      setTimeout(preloadNextRoute, PRELOAD_START_DELAY_MS);
     }
 
     function parseHashRoute() {
@@ -1080,6 +1514,16 @@
           loadingMessage.classList.remove("fading");
         });
       }, LOADER_SHOW_DELAY_MS);
+    }
+
+    function forceHideLoadingMessage() {
+      clearTimeout(loadingShowTimer);
+      clearTimeout(loadingHideTimer);
+      clearTimeout(loadingFadeTimer);
+      loadingMessage.classList.add("hidden");
+      loadingMessage.classList.remove("visible");
+      loadingMessage.classList.remove("fading");
+      loadingVisibleAt = 0;
     }
 
     function hideLoadingMessage() {
@@ -1212,6 +1656,7 @@
     }
 
     function loadEmbeddedLink(options) {
+      const route = options.route;
       const newEmbedLink = options.embedSrc;
       const shouldShowProjectWarning = options.isProject;
       const clickedLink = options.clickedLink;
@@ -1225,10 +1670,20 @@
       }
 
       hidePlaceholderMessage();
-      showLoadingMessage();
-
-      contentFrame.src = newEmbedLink;
       currentViewKey = viewKey;
+
+      const iframeRecord = activateIframeForRoute(route);
+
+      if (!iframeRecord) {
+        showPlaceholderMessage();
+        return false;
+      }
+
+      if (iframeRecord.isLoaded) {
+        forceHideLoadingMessage();
+      } else {
+        showLoadingMessage();
+      }
 
       if (shouldShowProjectWarning) {
         showWarningBar();
@@ -1286,8 +1741,26 @@
       }
     }
 
+    function getAllProjectGroups() {
+      return PORTAL_CONFIG.projectGroups || [];
+    }
+
+    function getAllProjects() {
+      const projects = [];
+
+      getAllProjectGroups().forEach(function(group) {
+        (group.sections || []).forEach(function(section) {
+          (section.projects || []).forEach(function(project) {
+            projects.push(project);
+          });
+        });
+      });
+
+      return projects;
+    }
+
     function getProjectById(projectId) {
-      return PORTAL_CONFIG.projects.find(function(project) {
+      return getAllProjects().find(function(project) {
         return project.id === projectId;
       });
     }
@@ -1322,6 +1795,7 @@
         }
 
         success = loadEmbeddedLink({
+          route: route,
           embedSrc: project.embedSrc,
           isProject: true,
           clickedLink: clickedLink,
@@ -1339,6 +1813,7 @@
         }
 
         success = loadEmbeddedLink({
+          route: route,
           embedSrc: view.embedSrc,
           isProject: false,
           clickedLink: clickedLink,
@@ -1354,6 +1829,10 @@
 
       if (success && !shouldUpdateHash) {
         currentRouteHash = window.location.hash || routeHash(route);
+      }
+
+      if (success) {
+        startPreloadingEmbeddedLinks(route);
       }
 
       return success;
@@ -1403,40 +1882,176 @@
       });
     }
 
+    function createCollapsibleButton(label, level, groupIndex, sectionIndex) {
+      const button = document.createElement("button");
+      const labelSpan = document.createElement("span");
+      const caretSpan = document.createElement("span");
+
+      button.type = "button";
+      button.className = level === "group" ? "project-group-toggle" : "project-subgroup-toggle";
+      button.setAttribute("aria-expanded", "false");
+
+      if (level === "group") {
+        button.setAttribute("data-project-group-toggle", String(groupIndex));
+      } else {
+        button.setAttribute("data-project-subgroup-toggle", groupIndex + ":" + sectionIndex);
+        button.setAttribute("data-project-section-label", label);
+      }
+
+      labelSpan.textContent = label;
+      caretSpan.className = "project-caret";
+      caretSpan.textContent = "▶";
+
+      button.appendChild(labelSpan);
+      button.appendChild(caretSpan);
+
+      return button;
+    }
+
+    function setCollapsibleOpen(button, content, shouldOpen) {
+      if (!button || !content) {
+        return;
+      }
+
+      button.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      button.querySelector(".project-caret").textContent = shouldOpen ? "▼" : "▶";
+      content.classList.toggle("open", shouldOpen);
+    }
+
+    function toggleCollapsible(button, content) {
+      const shouldOpen = !content.classList.contains("open");
+      setCollapsibleOpen(button, content, shouldOpen);
+    }
+
     function renderProjectLinks() {
       projectLinksContainer.innerHTML = "";
 
-      PORTAL_CONFIG.projects.forEach(function(project) {
-        const projectLink = document.createElement("a");
+      getAllProjectGroups().forEach(function(group, groupIndex) {
+        const groupButton = createCollapsibleButton(group.label, "group", groupIndex);
+        const groupContent = document.createElement("div");
 
-        projectLink.className = "project-view-link";
-        projectLink.href = routeHash({
-          type: "project",
-          id: project.id
+        groupContent.className = "project-group-content";
+        groupContent.setAttribute("data-project-group-content", String(groupIndex));
+
+        groupButton.addEventListener("click", function(event) {
+          event.preventDefault();
+          toggleCollapsible(groupButton, groupContent);
         });
-        projectLink.setAttribute("data-project-id", project.id);
-        projectLink.textContent = project.label;
 
-        projectLinksContainer.appendChild(projectLink);
+        projectLinksContainer.appendChild(groupButton);
+        projectLinksContainer.appendChild(groupContent);
+
+        (group.sections || []).forEach(function(section, sectionIndex) {
+          const sectionButton = createCollapsibleButton(section.label, "section", groupIndex, sectionIndex);
+          const sectionContent = document.createElement("div");
+
+          sectionContent.className = "project-subgroup-content";
+          sectionContent.setAttribute("data-project-subgroup-content", groupIndex + ":" + sectionIndex);
+
+          sectionButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            toggleCollapsible(sectionButton, sectionContent);
+          });
+
+          groupContent.appendChild(sectionButton);
+          groupContent.appendChild(sectionContent);
+
+          if ((section.label || "").toLowerCase() === "all projects") {
+            setCollapsibleOpen(sectionButton, sectionContent, true);
+          }
+
+          (section.projects || []).forEach(function(project) {
+            const projectLink = document.createElement("a");
+
+            projectLink.className = "project-view-link";
+            projectLink.href = routeHash({
+              type: "project",
+              id: project.id
+            });
+            projectLink.setAttribute("data-project-id", project.id);
+            projectLink.setAttribute("data-project-group", String(groupIndex));
+            projectLink.setAttribute("data-project-subgroup", groupIndex + ":" + sectionIndex);
+            projectLink.textContent = project.label;
+
+            sectionContent.appendChild(projectLink);
+          });
+        });
       });
     }
 
     function filterProjectLinks() {
       const searchTerm = projectSearch.value.trim().toLowerCase();
       const projectLinks = Array.from(projectLinksContainer.querySelectorAll(".project-view-link"));
+      const groupButtons = Array.from(projectLinksContainer.querySelectorAll("[data-project-group-toggle]"));
+      const groupContents = Array.from(projectLinksContainer.querySelectorAll("[data-project-group-content]"));
+      const sectionButtons = Array.from(projectLinksContainer.querySelectorAll("[data-project-subgroup-toggle]"));
+      const sectionContents = Array.from(projectLinksContainer.querySelectorAll("[data-project-subgroup-content]"));
 
       let visibleCount = 0;
+      const visibleGroups = {};
+      const visibleSections = {};
 
       projectLinks.forEach(function(link) {
         const projectName = link.textContent.toLowerCase();
-        const shouldShow = projectName.includes(searchTerm);
+        const groupKey = link.getAttribute("data-project-group");
+        const sectionKey = link.getAttribute("data-project-subgroup");
+        const shouldShow = !searchTerm || projectName.includes(searchTerm);
 
         link.style.display = shouldShow ? "block" : "none";
 
         if (shouldShow) {
           visibleCount += 1;
+          visibleGroups[groupKey] = true;
+          visibleSections[sectionKey] = true;
         }
       });
+
+      groupButtons.forEach(function(button) {
+        const groupKey = button.getAttribute("data-project-group-toggle");
+        button.style.display = visibleGroups[groupKey] ? "flex" : "none";
+      });
+
+      sectionButtons.forEach(function(button) {
+        const sectionKey = button.getAttribute("data-project-subgroup-toggle");
+        button.style.display = visibleSections[sectionKey] ? "flex" : "none";
+      });
+
+      if (searchTerm) {
+        groupButtons.forEach(function(button) {
+          const groupKey = button.getAttribute("data-project-group-toggle");
+          const content = projectLinksContainer.querySelector('[data-project-group-content="' + groupKey + '"]');
+
+          if (visibleGroups[groupKey]) {
+            setCollapsibleOpen(button, content, true);
+          }
+        });
+
+        sectionButtons.forEach(function(button) {
+          const sectionKey = button.getAttribute("data-project-subgroup-toggle");
+          const content = projectLinksContainer.querySelector('[data-project-subgroup-content="' + sectionKey + '"]');
+
+          if (visibleSections[sectionKey]) {
+            setCollapsibleOpen(button, content, true);
+          }
+        });
+      } else {
+        groupContents.forEach(function(content) {
+          const groupKey = content.getAttribute("data-project-group-content");
+          const button = projectLinksContainer.querySelector('[data-project-group-toggle="' + groupKey + '"]');
+          setCollapsibleOpen(button, content, false);
+          content.style.display = "";
+        });
+
+        sectionContents.forEach(function(content) {
+          const sectionKey = content.getAttribute("data-project-subgroup-content");
+          const button = projectLinksContainer.querySelector('[data-project-subgroup-toggle="' + sectionKey + '"]');
+          const sectionLabel = button ? button.getAttribute("data-project-section-label") : "";
+          const shouldOpenByDefault = (sectionLabel || "").toLowerCase() === "all projects";
+
+          setCollapsibleOpen(button, content, shouldOpenByDefault);
+          content.style.display = "";
+        });
+      }
 
       noProjectResults.style.display = visibleCount === 0 ? "block" : "none";
     }
@@ -1521,10 +2136,6 @@
       currentRouteHash = requestedHash;
     }
 
-    contentFrame.addEventListener("load", function() {
-      scheduleLoadingMessageHide();
-    });
-
     saveNoButton.addEventListener("click", function() {
       closeSaveModal();
     });
@@ -1587,6 +2198,30 @@
       }
     });
 
+    window.addEventListener("focus", function() {
+      const authRefreshPending = sessionStorage.getItem(AUTH_REFRESH_FLAG) === "true";
+      const authRefreshDone = sessionStorage.getItem(AUTH_REFRESH_DONE_FLAG) === "true";
+
+      if (authRefreshPending && !authRefreshDone) {
+        sessionStorage.setItem(AUTH_REFRESH_DONE_FLAG, "true");
+        sessionStorage.removeItem(AUTH_REFRESH_FLAG);
+        window.location.reload();
+      }
+    });
+
+    document.addEventListener("visibilitychange", function() {
+      if (document.visibilityState === "visible") {
+        const authRefreshPending = sessionStorage.getItem(AUTH_REFRESH_FLAG) === "true";
+        const authRefreshDone = sessionStorage.getItem(AUTH_REFRESH_DONE_FLAG) === "true";
+
+        if (authRefreshPending && !authRefreshDone) {
+          sessionStorage.setItem(AUTH_REFRESH_DONE_FLAG, "true");
+          sessionStorage.removeItem(AUTH_REFRESH_FLAG);
+          window.location.reload();
+        }
+      }
+    });
+
     projectSearch.addEventListener("input", filterProjectLinks);
     window.addEventListener("hashchange", handleHashChange);
 
@@ -1604,6 +2239,10 @@
 
       if (isPlaceholderActionLink) {
         return;
+      }
+
+      if (href && href.includes("smartsheet.com")) {
+        markAuthRefreshPending();
       }
 
       if (isPortalViewLink) {
