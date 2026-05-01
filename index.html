@@ -326,6 +326,19 @@
       outline: none;
     }
 
+    .project-subgroup-toggle[data-project-section-label="All Projects"] {
+      font-weight: 600;
+      color: #666;
+      background: #f7f7f7;
+    }
+
+    .project-subgroup-toggle[data-project-section-label="All Projects"]:hover,
+    .project-subgroup-toggle[data-project-section-label="All Projects"]:focus {
+      background: #e8e9fb;
+      color: #252763;
+      outline: none;
+    }
+
     .project-group-content,
     .project-subgroup-content {
       display: none;
@@ -977,6 +990,7 @@
       projectGroups: [
         {
           label: "DIR: Compensation, Benefits, & HRS",
+          preloadProjects: true,
           sections: [
             {
               label: "BAU",
@@ -1315,7 +1329,23 @@
       preloadStarted = true;
 
       const activeKey = activeRoute ? routeKey(activeRoute) : "";
-      const routesToPreload = getAllEmbeddableRoutes().filter(function(route) {
+      const routesToPreload = [];
+
+      Object.keys(PORTAL_CONFIG.views).forEach(function(viewId) {
+        routesToPreload.push({
+          type: "view",
+          id: viewId
+        });
+      });
+
+      getPreloadableProjects().forEach(function(project) {
+        routesToPreload.push({
+          type: "project",
+          id: project.id
+        });
+      });
+
+      const filteredRoutesToPreload = routesToPreload.filter(function(route) {
         const embedData = getEmbedDataForRoute(route);
 
         return (
@@ -1328,11 +1358,11 @@
       let routeIndex = 0;
 
       function preloadNextRoute() {
-        if (routeIndex >= routesToPreload.length) {
+        if (routeIndex >= filteredRoutesToPreload.length) {
           return;
         }
 
-        getOrCreateIframeForRoute(routesToPreload[routeIndex]);
+        getOrCreateIframeForRoute(filteredRoutesToPreload[routeIndex]);
         routeIndex += 1;
 
         setTimeout(preloadNextRoute, PRELOAD_STAGGER_MS);
@@ -1663,6 +1693,28 @@
       const projects = [];
 
       getAllProjectGroups().forEach(function(group) {
+        (group.projects || []).forEach(function(project) {
+          projects.push(project);
+        });
+
+        (group.sections || []).forEach(function(section) {
+          (section.projects || []).forEach(function(project) {
+            projects.push(project);
+          });
+        });
+      });
+
+      return projects;
+    }
+
+    function getPreloadableProjects() {
+      const projects = [];
+
+      getAllProjectGroups().forEach(function(group) {
+        if (!group.preloadProjects) {
+          return;
+        }
+
         (group.projects || []).forEach(function(project) {
           projects.push(project);
         });
