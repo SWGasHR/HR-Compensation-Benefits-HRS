@@ -295,12 +295,12 @@
     }
 
     .project-group-toggle {
-      padding: 10px 16px 6px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #8a8a8a;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      padding: 12px 16px 8px 16px;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #252763;
+      text-transform: none;
+      letter-spacing: 0.1px;
       border-top: 1px solid #e9e9e9;
     }
 
@@ -345,6 +345,10 @@
 
     .project-subgroup-content .project-view-link {
       padding-left: 38px;
+    }
+
+    .project-group-content > .project-view-link {
+      padding-left: 24px;
     }
 
     /* --- RED WARNING BAR --- */
@@ -972,56 +976,22 @@
 
       projectGroups: [
         {
-          label: "DIR: Comp, Ben, & HRS",
+          label: "DIR: Compensation, Benefits, & HRS",
           sections: [
             {
               label: "BAU",
               projects: [
-                {
-                  id: "bau comp",
-                  label: "Compensation (BAU)",
-                  embedSrc: "INSERT_COMPENSATION_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau benefits",
-                  label: "Benefits (BAU)",
-                  embedSrc: "INSERT_BENEFITS_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau hrs",
-                  label: "HRS (BAU)",
-                  embedSrc: "INSERT_HRS_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau hrss",
-                  label: "HRSS (BAU)",
-                  embedSrc: "INSERT_HRSS_BAU_EMBED_LINK_HERE"
-                }
+                { id: "bau comp", label: "Compensation (BAU)", embedSrc: "INSERT_COMPENSATION_BAU_EMBED_LINK_HERE" },
+                { id: "bau benefits", label: "Benefits (BAU)", embedSrc: "INSERT_BENEFITS_BAU_EMBED_LINK_HERE" },
+                { id: "bau hrs", label: "HRS (BAU)", embedSrc: "INSERT_HRS_BAU_EMBED_LINK_HERE" }
               ]
             },
             {
               label: "All Projects",
               projects: [
-                {
-                  id: "all comp projects",
-                  label: "All Compensation Projects",
-                  embedSrc: "INSERT_ALL_COMPENSATION_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all benefits projects",
-                  label: "All Benefits Projects",
-                  embedSrc: "INSERT_ALL_BENEFITS_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all hrs projects",
-                  label: "All HRS Projects",
-                  embedSrc: "INSERT_ALL_HRS_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all hrss projects",
-                  label: "All HRSS Projects",
-                  embedSrc: "INSERT_ALL_HRSS_PROJECTS_EMBED_LINK_HERE"
-                }
+                { id: "all comp projects", label: "All Compensation Projects", embedSrc: "INSERT_ALL_COMPENSATION_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all benefits projects", label: "All Benefits Projects", embedSrc: "INSERT_ALL_BENEFITS_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all hrs projects", label: "All HRS Projects", embedSrc: "INSERT_ALL_HRS_PROJECTS_EMBED_LINK_HERE" }
               ]
             }
           ]
@@ -1032,108 +1002,52 @@
             {
               label: "BAU",
               projects: [
-                {
-                  id: "bau hrbp",
-                  label: "HRBP (BAU)",
-                  embedSrc: "INSERT_HRBP_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau hrlo",
-                  label: "HRLO (BAU)",
-                  embedSrc: "INSERT_HRLO_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau hrcm",
-                  label: "HRCM (BAU)",
-                  embedSrc: "INSERT_HRCM_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau labor relations",
-                  label: "Labor Relations (BAU)",
-                  embedSrc: "INSERT_LABOR_RELATIONS_BAU_EMBED_LINK_HERE"
-                }
+                { id: "bau talent development", label: "Talent Development (BAU)", embedSrc: "INSERT_TALENT_DEVELOPMENT_BAU_EMBED_LINK_HERE" },
+                { id: "bau hrbp", label: "HRBP (BAU)", embedSrc: "INSERT_HRBP_BAU_EMBED_LINK_HERE" },
+                { id: "bau hrlo", label: "HRLO (BAU)", embedSrc: "INSERT_HRLO_BAU_EMBED_LINK_HERE" },
+                { id: "bau labor relations", label: "Labor Relations (BAU)", embedSrc: "INSERT_LABOR_RELATIONS_BAU_EMBED_LINK_HERE" }
               ]
             },
             {
               label: "All Projects",
               projects: [
-                {
-                  id: "all hrbp projects",
-                  label: "All HRBP Projects",
-                  embedSrc: "INSERT_ALL_HRBP_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all hrlo projects",
-                  label: "All HRLO Projects",
-                  embedSrc: "INSERT_ALL_HRLO_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all hrcm projects",
-                  label: "All HRCM Projects",
-                  embedSrc: "INSERT_ALL_HRCM_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all labor relations projects",
-                  label: "All Labor Relations Projects",
-                  embedSrc: "INSERT_ALL_LABOR_RELATIONS_PROJECTS_EMBED_LINK_HERE"
-                }
+                { id: "all talent development projects", label: "All Talent Development Projects", embedSrc: "INSERT_ALL_TALENT_DEVELOPMENT_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all hrbp projects", label: "All HRBP Projects", embedSrc: "INSERT_ALL_HRBP_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all hrlo projects", label: "All HRLO Projects", embedSrc: "INSERT_ALL_HRLO_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all labor relations projects", label: "All Labor Relations Projects", embedSrc: "INSERT_ALL_LABOR_RELATIONS_PROJECTS_EMBED_LINK_HERE" }
               ]
             }
           ]
         },
         {
-          label: "DIR: EX, DE&I, & TA",
+          label: "DIR: Employee Experience, DE&I, & Talent Acquisition",
           sections: [
             {
               label: "BAU",
               projects: [
-                {
-                  id: "bau employee experience",
-                  label: "Employee Experience (BAU)",
-                  embedSrc: "INSERT_EMPLOYEE_EXPERIENCE_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau dei",
-                  label: "DE&I (BAU)",
-                  embedSrc: "INSERT_DEI_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau talent acquisition",
-                  label: "Talent Acquisition (BAU)",
-                  embedSrc: "INSERT_TALENT_ACQUISITION_BAU_EMBED_LINK_HERE"
-                },
-                {
-                  id: "bau talent development",
-                  label: "Talent Development (BAU)",
-                  embedSrc: "INSERT_TALENT_DEVELOPMENT_BAU_EMBED_LINK_HERE"
-                }
+                { id: "bau employee experience", label: "Employee Experience (BAU)", embedSrc: "INSERT_EMPLOYEE_EXPERIENCE_BAU_EMBED_LINK_HERE" },
+                { id: "bau dei", label: "DE&I (BAU)", embedSrc: "INSERT_DEI_BAU_EMBED_LINK_HERE" },
+                { id: "bau talent acquisition", label: "Talent Acquisition (BAU)", embedSrc: "INSERT_TALENT_ACQUISITION_BAU_EMBED_LINK_HERE" },
+                { id: "bau hrss", label: "HRSS (BAU)", embedSrc: "INSERT_HRSS_BAU_EMBED_LINK_HERE" }
               ]
             },
             {
               label: "All Projects",
               projects: [
-                {
-                  id: "all employee experience projects",
-                  label: "All Employee Experience Projects",
-                  embedSrc: "INSERT_ALL_EMPLOYEE_EXPERIENCE_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all dei projects",
-                  label: "All DE&I Projects",
-                  embedSrc: "INSERT_ALL_DEI_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all talent acquisition projects",
-                  label: "All Talent Acquisition Projects",
-                  embedSrc: "INSERT_ALL_TALENT_ACQUISITION_PROJECTS_EMBED_LINK_HERE"
-                },
-                {
-                  id: "all talent development projects",
-                  label: "All Talent Development Projects",
-                  embedSrc: "INSERT_ALL_TALENT_DEVELOPMENT_PROJECTS_EMBED_LINK_HERE"
-                }
+                { id: "all employee experience projects", label: "All Employee Experience Projects", embedSrc: "INSERT_ALL_EMPLOYEE_EXPERIENCE_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all dei projects", label: "All DE&I Projects", embedSrc: "INSERT_ALL_DEI_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all talent acquisition projects", label: "All Talent Acquisition Projects", embedSrc: "INSERT_ALL_TALENT_ACQUISITION_PROJECTS_EMBED_LINK_HERE" },
+                { id: "all hrss projects", label: "All HRSS Projects", embedSrc: "INSERT_ALL_HRSS_PROJECTS_EMBED_LINK_HERE" }
               ]
             }
+          ]
+        },
+        {
+          label: "HR Change Management",
+          projects: [
+            { id: "bau hrcm", label: "HR Change Management (BAU)", embedSrc: "INSERT_HR_CHANGE_MANAGEMENT_BAU_EMBED_LINK_HERE" },
+            { id: "all hrcm projects", label: "All HR Change Management Projects", embedSrc: "INSERT_ALL_HR_CHANGE_MANAGEMENT_PROJECTS_EMBED_LINK_HERE" },
+            { id: "hr change management main initiative", label: "HR Change Management Main Initiative #1 (Placeholder)", embedSrc: "INSERT_HR_CHANGE_MANAGEMENT_INITIATIVE_LINK_HERE" }
           ]
         }
       ]
@@ -1749,6 +1663,10 @@
       const projects = [];
 
       getAllProjectGroups().forEach(function(group) {
+        (group.projects || []).forEach(function(project) {
+          projects.push(project);
+        });
+
         (group.sections || []).forEach(function(section) {
           (section.projects || []).forEach(function(project) {
             projects.push(project);
@@ -1941,6 +1859,21 @@
         projectLinksContainer.appendChild(groupButton);
         projectLinksContainer.appendChild(groupContent);
 
+        (group.projects || []).forEach(function(project) {
+          const projectLink = document.createElement("a");
+
+          projectLink.className = "project-view-link";
+          projectLink.href = routeHash({
+            type: "project",
+            id: project.id
+          });
+          projectLink.setAttribute("data-project-id", project.id);
+          projectLink.setAttribute("data-project-group", String(groupIndex));
+          projectLink.textContent = project.label;
+
+          groupContent.appendChild(projectLink);
+        });
+
         (group.sections || []).forEach(function(section, sectionIndex) {
           const sectionButton = createCollapsibleButton(section.label, "section", groupIndex, sectionIndex);
           const sectionContent = document.createElement("div");
@@ -2002,7 +1935,10 @@
         if (shouldShow) {
           visibleCount += 1;
           visibleGroups[groupKey] = true;
-          visibleSections[sectionKey] = true;
+
+          if (sectionKey) {
+            visibleSections[sectionKey] = true;
+          }
         }
       });
 
